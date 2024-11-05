@@ -1,0 +1,73 @@
+.skillBar {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+  }
+  
+  .skill {
+    width: 60px;
+    height: 60px;
+    background-color: rgba(0, 0, 0, 0.7);
+    border: 2px solid #fff;
+    border-radius: 8px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .skill span {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    color: #fff;
+    font-size: 14px;
+    z-index: 2;
+  }
+  
+  .skill img {
+    width: 40px;
+    height: 40px;
+    margin-top: 10px;
+    z-index: 1;
+  }
+  
+  .cooldownOverlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    transform-origin: center;
+    animation-name: cooldownAnimation;
+    animation-timing-function: linear;
+    animation-fill-mode: forwards;
+    z-index: 3;
+  }
+  
+  .cooldownText {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    color: #fff;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 4;
+  }
+  
+  @keyframes cooldownAnimation {
+    from {
+      clip-path: polygon(50% 50%, 0% 50%, 0% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 50%);
+    }
+    to {
+      clip-path: polygon(50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%);
+    }
+  }
+  
