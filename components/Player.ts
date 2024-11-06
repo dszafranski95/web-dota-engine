@@ -3,7 +3,7 @@ import * as THREE from 'three';
 
 export class Player {
   public mesh: THREE.Mesh;
-  private speed: number = 2; // Zmniejszona prędkość dla płynniejszego ruchu
+  private speed: number = 70; // Zmniejszona prędkość dla płynniejszego ruchu
   private destination: THREE.Vector3;
   private isMoving: boolean = false;
   private obstacles: THREE.Mesh[];
