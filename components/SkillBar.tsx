@@ -1,3 +1,4 @@
+// components/SkillBar.tsx
 import React from 'react';
 import styles from './SkillBar.module.css';
 
@@ -11,46 +12,48 @@ const SkillBar: React.FC<SkillBarProps> = ({ spellCooldowns }) => {
   };
 
   const maxCooldowns: { [key: number]: number } = {
-    1: 0,
-    2: 5000,
-    3: 15000,
-    4: 60000,
+    1: 0,      // Zakładam, że czar 1 nie ma cooldownu
+    2: 5000,   // 5 sekund
+    3: 15000,  // 15 sekund
+    4: 60000,  // 60 sekund
+  };
+
+  const spellIcons: { [key: number]: string } = {
+    1: '/textures/fire.png',
+    2: '/textures/snow.png',
+    3: '/textures/lightning.png',
+    4: '/textures/poison.png',
   };
 
   return (
     <div className={styles.skillBar}>
       {[1, 2, 3, 4].map((spellNumber) => {
-        const cooldown = spellCooldowns[spellNumber];
+        const cooldown = spellCooldowns[spellNumber] || 0;
         const maxCooldown = maxCooldowns[spellNumber];
-        const isOnCooldown = cooldown > 0;
-
-        // Obliczenie procentu pozostałego czasu odnowienia
-        const cooldownPercentage = isOnCooldown ? (cooldown / maxCooldown) * 100 : 0;
-
-        // Ścieżka do ikony czaru
-        const spellIcons: { [key: number]: string } = {
-          1: '/icons/fire.png',
-          2: '/icons/ice.png',
-          3: '/icons/lightning.png',
-          4: '/icons/poison.png',
-        };
+        const isOnCooldown = cooldown > 0 && maxCooldown > 0;
 
         return (
           <div
             key={spellNumber}
             className={`${styles.skill} ${isOnCooldown ? styles.cooldown : ''}`}
-            data-key={spellNumber}
           >
-            <span>{spellNumber}</span>
-            <img src={spellIcons[spellNumber]} alt={`Spell ${spellNumber}`} />
+            <span className={styles.spellNumber}>{spellNumber}</span>
+            <img
+              src={spellIcons[spellNumber]}
+              alt={`Spell ${spellNumber}`}
+              className={styles.spellIcon}
+            />
             {isOnCooldown && (
               <>
                 <div
                   className={styles.cooldownOverlay}
-                  style={{ animationDuration: `${maxCooldown}ms` }}
+                  style={{
+                    height: `${(cooldown / maxCooldown) * 100}%`,
+                    transition: `height ${cooldown / 1000}s linear`,
+                  }}
                 ></div>
                 <div className={styles.cooldownText}>
-                  {formatCooldown(cooldown)}
+                  {Math.ceil(cooldown / 1000)}
                 </div>
               </>
             )}

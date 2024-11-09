@@ -1,36 +1,44 @@
+/* components/SkillBar.module.css */
+
 .skillBar {
     position: absolute;
-    bottom: 10px;
+    bottom: 20px;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
-    gap: 10px;
+    gap: 15px;
+    padding: 10px 20px;
+    background-color: rgba(0, 0, 0, 0.6);
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
   }
   
   .skill {
     width: 60px;
     height: 60px;
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: rgba(255, 255, 255, 0.1);
     border: 2px solid #fff;
     border-radius: 8px;
     text-align: center;
     position: relative;
     overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   
-  .skill span {
+  .spellNumber {
     position: absolute;
-    top: 2px;
-    left: 2px;
+    top: 4px;
+    left: 4px;
     color: #fff;
     font-size: 14px;
     z-index: 2;
   }
   
-  .skill img {
+  .spellIcon {
     width: 40px;
     height: 40px;
-    margin-top: 10px;
     z-index: 1;
   }
   
@@ -60,6 +68,7 @@
     align-items: center;
     justify-content: center;
     z-index: 4;
+    pointer-events: none;
   }
   
   @keyframes cooldownAnimation {

@@ -1,5 +1,5 @@
-// tor-game\components\GameCanvas.tsx
-"use client";
+// components/GameCanvas.tsx
+"use client"
 import React, { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 import { createMap, updateHealthBar } from './MapComponent';
@@ -79,8 +79,8 @@ const GameCanvas = () => {
     const mouse = new THREE.Vector2();
 
     // Referencje do podłogi i terenu
-    const floor = obstacles.find((obj) => obj.name === 'floor');
-    const terrain = obstacles.find((obj) => obj.name === 'terrain');
+    const floor = obstacles.find((obj) => obj.name === 'floor') as THREE.Mesh;
+    const terrain = obstacles.find((obj) => obj.name === 'terrain') as THREE.Mesh;
 
     // Inicjalizacja menedżera pocisków
     const projectileManager = new ProjectileManager(scene, obstacles, halfMapSize);
@@ -98,34 +98,33 @@ const GameCanvas = () => {
     );
 
     // Obsługa kliknięć myszy
-// Przykład w GameCanvas.tsx
-const onMouseDown = (event: MouseEvent) => {
-  event.preventDefault();
+    const onMouseDown = (event: MouseEvent) => {
+      event.preventDefault();
 
-  if (event.button === 0 && !spellManager.isSelectingTarget) {
-    // Lewy przycisk myszy - ruch gracza
-    const rect = renderer.domElement.getBoundingClientRect();
-    mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
-    mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+      if (event.button === 0 && !spellManager.isSelectingTarget) {
+        // Lewy przycisk myszy - ruch gracza
+        const rect = renderer.domElement.getBoundingClientRect();
+        mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+        mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
 
-    raycaster.setFromCamera(mouse, camera);
+        raycaster.setFromCamera(mouse, camera);
 
-    const intersects = raycaster.intersectObjects(scene.children, true);
+        const intersects = raycaster.intersectObjects(scene.children, true);
 
-    for (let i = 0; i < intersects.length; i++) {
-      const intersect = intersects[i];
-      // Pomiń drogi
-      if (
-        intersect.object.name === 'floor' ||
-        intersect.object.name === 'terrain' ||
-        intersect.object.userData.isRoad // Pomiń drogi
-      ) {
-        player.setDestination(intersect.point.clone());
-        break;
+        for (let i = 0; i < intersects.length; i++) {
+          const intersect = intersects[i];
+          // Pomiń drogi
+          if (
+            intersect.object.name === 'floor' ||
+            intersect.object.name === 'terrain' ||
+            (intersect.object.userData && intersect.object.userData.isRoad) // Pomiń drogi
+          ) {
+            player.setDestination(intersect.point.clone());
+            break;
+          }
+        }
       }
-    }
-  }
-};
+    };
 
     renderer.domElement.addEventListener('mousedown', onMouseDown);
     renderer.domElement.addEventListener('contextmenu', (event) => event.preventDefault());
